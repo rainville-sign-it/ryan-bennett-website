@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ryan Bennett Real Estate Group</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--navy:#0a1f44;--gold:#c9a84c;--gold-light:#e8c97a;--gray:#f5f5f3;--white:#ffffff;--text:#1a1a2e;--muted:#6b7280}
+  body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--text);background:#fff;line-height:1.6}
+  a{text-decoration:none;color:inherit}
+
+  /* NAV */
+  nav{position:fixed;top:0;width:100%;background:rgba(10,31,68,0.97);backdrop-filter:blur(8px);z-index:999;padding:0 5%}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{color:#fff;font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+  .logo span{color:var(--gold)}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{color:rgba(255,255,255,.85);font-size:.9rem;transition:color .2s}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-cta{background:var(--gold);color:var(--navy);padding:9px 20px;border-radius:4px;font-size:.85rem;font-weight:700;transition:background .2s}
+  .nav-cta:hover{background:var(--gold-light)}
+
+  /* HERO */
+  .hero{min-height:100vh;background:linear-gradient(135deg,var(--navy) 0%,#1a3a6e 100%);display:flex;align-items:center;padding:100px 5% 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;right:-10%;top:-10%;width:60%;height:120%;background:radial-gradient(ellipse,rgba(201,168,76,.08) 0%,transparent 70%);pointer-events:none}
+  .hero-content{max-width:680px;z-index:1}
+  .hero-badge{display:inline-block;background:rgba(201,168,76,.15);color:var(--gold-light);border:1px solid rgba(201,168,76,.3);padding:6px 16px;border-radius:20px;font-size:.8rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:24px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:20px}
+  .hero h1 span{color:var(--gold)}
+  .hero p{font-size:1.15rem;color:rgba(255,255,255,.75);margin-bottom:36px;max-width:520px}
+  .hero-btns{display:flex;flex-wrap:wrap;gap:12px}
+  .btn-gold{background:var(--gold);color:var(--navy);padding:14px 28px;border-radius:5px;font-weight:700;font-size:.95rem;transition:all .2s;border:none;cursor:pointer}
+  .btn-gold:hover{background:var(--gold-light);transform:translateY(-1px)}
+  .btn-outline{background:transparent;color:#fff;padding:14px 28px;border-radius:5px;font-weight:600;font-size:.95rem;border:1.5px solid rgba(255,255,255,.4);transition:all .2s;cursor:pointer}
+  .btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+  .hero-img{position:absolute;right:5%;bottom:0;height:85%;opacity:.15;pointer-events:none}
+
+  /* STATS */
+  .stats{background:var(--gold);padding:28px 5%}
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto;text-align:center}
+  .stat-num{font-size:2rem;font-weight:800;color:var(--navy)}
+  .stat-label{font-size:.85rem;color:rgba(10,31,68,.7);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+
+  /* SECTION BASE */
+  section{padding:80px 5%}
+  .section-tag{display:inline-block;background:rgba(10,31,68,.08);color:var(--navy);padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+  .section-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:var(--navy);margin-bottom:12px;line-height:1.2}
+  .section-sub{color:var(--muted);font-size:1rem;max-width:500px;margin-bottom:40px}
+  .center{text-align:center}
+  .center .section-sub{margin:0 auto 40px}
+
+  /* ABOUT */
+  .about{background:var(--gray)}
+  .about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:60px;align-items:center;max-width:1100px;margin:0 auto}
+  .about-img-wrap{position:relative}
+  .about-img{width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,var(--navy),#1a3a6e);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .about-initials{font-size:5rem;font-weight:800;color:rgba(201,168,76,.4);letter-spacing:-4px}
+  .about-badge{position:absolute;bottom:-16px;right:-16px;background:var(--gold);padding:18px 22px;border-radius:10px;text-align:center}
+  .about-badge strong{display:block;font-size:1.6rem;font-weight:800;color:var(--navy)}
+  .about-badge span{font-size:.75rem;color:var(--navy);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .about-text p{color:var(--muted);margin-bottom:16px;font-size:1rem}
+  .about-bullets{list-style:none;margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .about-bullets li{display:flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600;color:var(--navy)}
+  .about-bullets li::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+  /* WHY CHOOSE */
+  .why{background:#fff}
+  .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:1100px;margin:0 auto}
+  .why-card{background:var(--gray);border-radius:10px;padding:28px;border-left:4px solid var(--gold);transition:transform .2s,box-shadow .2s}
+  .why-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+  .why-icon{width:42px;height:42px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .why-icon svg{fill:var(--gold);width:20px;height:20px}
+  .why-card h3{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:6px}
+  .why-card p{font-size:.875rem;color:var(--muted)}
+
+  /* LEAD MAGNETS */
+  .leads{background:var(--navy)}
+  .leads-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;max-width:1000px;margin:0 auto}
+  .lead-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:36px}
+  .lead-card h3{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:8px}
+  .lead-card p{color:rgba(255,255,255,.65);font-size:.9rem;margin-bottom:24px}
+  .lead-form input{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:12px 14px;color:#fff;font-size:.9rem;margin-bottom:10px;outline:none;transition:border .2s}
+  .lead-form input::placeholder{color:rgba(255,255,255,.4)}
+  .lead-form input:focus{border-color:var(--gold)}
+  .btn-gold-sm{width:100%;background:var(--gold);color:var(--navy);padding:13px;border-radius:6px;font-weight:700;font-size:.9rem;border:none;cursor:pointer;transition:background .2s;margin-top:4px}
+  .btn-gold-sm:hover{background:var(--gold-light)}
+
+  /* TESTIMONIALS */
+  .testimonials{background:var(--gray)}
+  .testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1100px;margin:0 auto}
+  .testi-card{background:#fff;border-radius:12px;padding:28px;border:1px solid rgba(0,0,0,.07);position:relative}
+  .stars{color:var(--gold);font-size:1.1rem;margin-bottom:14px;letter-spacing:2px}
+  .testi-card blockquote{font-size:.95rem;color:var(--text);font-style:italic;line-height:1.65;margin-bottom:16px}
+  .testi-author{display:flex;align-items:center;gap:12px}
+  .testi-avatar{width:40px;height:40px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;font-size:.85rem}
+  .testi-name{font-weight:700;font-size:.9rem;color:var(--navy)}
+  .testi-role{font-size:.78rem;color:var(--muted)}
+  .quote-mark{position:absolute;top:16px;right:20px;font-size:4rem;color:rgba(201,168,76,.15);font-family:Georgia,serif;line-height:1}
+
+  /* AREAS */
+  .areas{background:#fff}
+  .areas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1000px;margin:0 auto}
+  .area-card{border-radius:12px;overflow:hidden;position:relative;aspect-ratio:4/3;background:linear-gradient(135deg,var(--navy),#1a3a6e);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;cursor:pointer;transition:transform .2s}
+  .area-card:hover{transform:translateY(-4px)}
+  .area-card::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,31,68,.9) 0%,rgba(10,31,68,.2) 60%,transparent 100%)}
+  .area-overlay{position:relative;z-index:1}
+  .area-name{font-size:1.2rem;font-weight:800;color:#fff}
+  .area-tag{font-size:.75rem;color:var(--gold-light);font-weight:600}
+  .area-num{font-size:.8rem;color:rgba(255,255,255,.5);margin-top:4px}
+
+  /* CONTACT */
+  .contact{background:var(--navy)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start;max-width:1000px;margin:0 auto}
+  .contact-info h2{font-size:2rem;font-weight:800;color:#fff;margin-bottom:12px}
+  .contact-info p{color:rgba(255,255,255,.65);margin-bottom:28px}
+  .contact-detail{display:flex;align-items:center;gap:12px;margin-bottom:16px;color:rgba(255,255,255,.8);font-size:.9rem}
+  .contact-detail-icon{width:36px;height:36px;background:rgba(201,168,76,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .contact-detail-icon svg{fill:var(--gold);width:16px;height:16px}
+  .contact-form{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:32px}
+  .contact-form h3{color:#fff;font-size:1.2rem;font-weight:700;margin-bottom:20px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .form-group{margin-bottom:12px}
+  .form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:12px 14px;color:#fff;font-size:.875rem;outline:none;transition:border .2s;font-family:inherit}
+  .form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.35)}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold)}
+  .form-group select{color:rgba(255,255,255,.6)}
+  .form-group select option{background:var(--navy);color:#fff}
+  .form-group textarea{resize:vertical;min-height:90px}
+  .success-msg{display:none;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);color:var(--gold-light);padding:14px;border-radius:8px;font-size:.9rem;text-align:center;margin-top:12px}
+
+  /* FOOTER */
+  footer{background:#040d1e;padding:48px 5% 24px}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px;max-width:1100px;margin:0 auto 40px}
+  .footer-brand p{color:rgba(255,255,255,.45);font-size:.875rem;margin-top:10px;max-width:280px}
+  .footer-col h4{color:#fff;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+  .footer-col ul{list-style:none}
+  .footer-col ul li{margin-bottom:10px}
+  .footer-col ul li a{color:rgba(255,255,255,.5);font-size:.875rem;transition:color .2s}
+  .footer-col ul li a:hover{color:var(--gold)}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto}
+  .footer-bottom p{color:rgba(255,255,255,.3);font-size:.8rem}
+  .footer-tagline{color:var(--gold);font-size:.8rem;font-style:italic}
+
+  /* POPUP */
+  .popup-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center}
+  .popup-overlay.active{display:flex}
+  .popup{background:#fff;border-radius:16px;padding:40px;max-width:420px;width:90%;position:relative;text-align:center}
+  .popup-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted)}
+  .popup h3{font-size:1.5rem;font-weight:800;color:var(--navy);margin-bottom:8px}
+  .popup p{color:var(--muted);font-size:.9rem;margin-bottom:20px}
+  .popup input{width:100%;border:1.5px solid #e0e0e0;border-radius:6px;padding:12px 14px;font-size:.9rem;margin-bottom:10px;outline:none;font-family:inherit}
+  .popup input:focus{border-color:var(--navy)}
+  .popup-gift{font-size:2.5rem;margin-bottom:12px}
+
+  /* SCROLL FADE */
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Ryan Bennett <span>Real Estate Group</span></div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#why">Why Ryan</a></li>
+      <li><a href="#leads">Buy & Sell</a></li>
+      <li><a href="#areas">Areas</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Book Consultation</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Santa Cruz • Carmel • Monterey • Capitola</div>
+    <h1>Find Your Dream Home or<br><span>Sell for Top Dollar</span></h1>
+    <p>Trusted local guidance, proven strategies, and personalized service from Ryan Bennett — your partner in every move.</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="scrollTo('leads')">Get Home Value</button>
+      <button class="btn-gold" onclick="scrollTo('leads')">Search Homes</button>
+      <button class="btn-outline" onclick="scrollTo('contact')">Book Free Consultation</button>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-grid">
+    <div><div class="stat-num">50+</div><div class="stat-label">Homes Sold</div></div>
+    <div><div class="stat-num">$25M+</div><div class="stat-label">Sales Volume</div></div>
+    <div><div class="stat-num">100+</div><div class="stat-label">Happy Clients</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about fade-in" id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap">
+      <div class="about-img"><div class="about-initials">RB</div></div>
+      <div class="about-badge"><strong>5★</strong><span>Rated Agent</span></div>
+    </div>
+    <div class="about-text">
+      <span class="section-tag">About Ryan</span>
+      <h2 class="section-title">Meet Ryan Bennett</h2>
+      <p>Ryan Bennett is a trusted, results-driven real estate professional known for strong negotiation skills, fast communication, and a client-first approach. He helps buyers, sellers, and investors navigate the market with confidence.</p>
+      <p>Ryan combines deep local expertise with modern marketing strategies and personalized service to deliver smooth transactions and exceptional outcomes — every single time.</p>
+      <p>Whether you're a first-time buyer, upgrading your family home, seeking a luxury property, or looking to invest — Ryan has the knowledge and drive to get you there.</p>
+      <ul class="about-bullets">
+        <li>Fast Communication</li>
+        <li>Skilled Negotiator</li>
+        <li>Local Market Expert</li>
+        <li>Top Marketing Strategies</li>
+        <li>Smooth Closings</li>
+        <li>5-Star Experience</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE -->
+<section class="why fade-in" id="why">
+  <div class="center">
+    <span class="section-tag">Why Choose Ryan</span>
+    <h2 class="section-title">The Ryan Bennett Difference</h2>
+    <p class="section-sub">What sets Ryan apart from the competition</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+      <h3>Fast Communication</h3>
+      <p>Ryan responds quickly so you never miss an opportunity in a competitive market.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+      <h3>Skilled Negotiator</h3>
+      <p>Proven strategies to get you the best price — whether buying or selling.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg></div>
+      <h3>Local Market Expert</h3>
+      <p>Deep knowledge of Santa Cruz, Carmel, Monterey, and Capitola neighborhoods.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/></svg></div>
+      <h3>Strong Seller Marketing</h3>
+      <p>Premium listings with professional photography, digital ads, and targeted outreach.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+      <h3>Smooth Closings</h3>
+      <p>Expert coordination from offer to keys — minimizing stress every step of the way.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg></div>
+      <h3>5-Star Client Experience</h3>
+      <p>Hundreds of happy clients who trust Ryan with their most important financial decisions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD MAGNETS -->
+<section class="leads fade-in" id="leads">
+  <div class="center" style="margin-bottom:40px">
+    <span class="section-tag" style="background:rgba(201,168,76,.15);color:var(--gold-light)">Buy & Sell</span>
+    <h2 class="section-title" style="color:#fff">Ready to Make Your Move?</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.6);margin:0 auto 0">Get started with a free home value report or find your perfect home first.</p>
+  </div>
+  <div class="leads-grid">
+    <div class="lead-card">
+      <div style="font-size:2rem;margin-bottom:12px">🏡</div>
+      <h3>What's Your Home Worth?</h3>
+      <p>Get an instant property value estimate plus a personalized pricing strategy from Ryan.</p>
+      <div class="lead-form">
+        <input type="text" placeholder="Your home address" id="val-address">
+        <input type="text" placeholder="Your name" id="val-name">
+        <input type="email" placeholder="Email address" id="val-email">
+        <button class="btn-gold-sm" onclick="submitLead('valuation')">Get Free Home Value Report →</button>
+        <div class="success-msg" id="val-success">Thanks! Ryan will send your home value report shortly.</div>
+      </div>
+    </div>
+    <div class="lead-card">
+      <div style="font-size:2rem;margin-bottom:12px">🔑</div>
+      <h3>Get Access to New Listings First</h3>
+      <p>Receive homes matching your criteria before they hit the market. Stay ahead of the competition.</p>
+      <div class="lead-form">
+        <input type="text" placeholder="Your name" id="buyer-name">
+        <input type="email" placeholder="Email address" id="buyer-email">
+        <input type="text" placeholder="Budget range (e.g. $800K–$1.2M)" id="buyer-budget">
+        <input type="text" placeholder="Preferred area" id="buyer-area">
+        <button class="btn-gold-sm" onclick="submitLead('buyer')">Start Home Search →</button>
+        <div class="success-msg" id="buyer-success">You're in! Ryan will be in touch with matching listings.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials fade-in" id="testimonials">
+  <div class="center">
+    <span class="section-tag">Client Reviews</span>
+    <h2 class="section-title">What Clients Are Saying</h2>
+    <p class="section-sub">Real stories from real people who trusted Ryan with their real estate goals</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="quote-mark">"</div>
+      <div class="stars">★★★★★</div>
+      <blockquote>"Ryan made buying our first home easy and completely stress-free. He was patient, knowledgeable, and always available to answer our questions. We couldn't be happier!"</blockquote>
+      <div class="testi-author">
+        <div class="testi-avatar">JM</div>
+        <div><div class="testi-name">James & Maria T.</div><div class="testi-role">First-Time Buyers · Santa Cruz</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="quote-mark">"</div>
+      <div class="stars">★★★★★</div>
+      <blockquote>"We sold our home above asking price thanks to Ryan's brilliant strategy and marketing. He brought multiple offers in the first week. Truly exceptional service."</blockquote>
+      <div class="testi-author">
+        <div class="testi-avatar">SK</div>
+        <div><div class="testi-name">Sarah K.</div><div class="testi-role">Home Seller · Carmel-by-the-Sea</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="quote-mark">"</div>
+      <div class="stars">★★★★★</div>
+      <blockquote>"Responsive, professional, and highly knowledgeable. Ryan guided us through every step of our relocation from out of state. We found our dream home in Monterey!"</blockquote>
+      <div class="testi-author">
+        <div class="testi-avatar">DL</div>
+        <div><div class="testi-name">David & Lisa R.</div><div class="testi-role">Relocation Clients · Monterey</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE AREAS -->
+<section class="areas fade-in" id="areas">
+  <div class="center">
+    <span class="section-tag">Service Areas</span>
+    <h2 class="section-title">Local Expertise. Real Results.</h2>
+    <p class="section-sub">Ryan serves these premier California coastal communities</p>
+  </div>
+  <div class="areas-grid">
+    <div class="area-card" style="background:linear-gradient(135deg,#0a2a4a,#1a4a7a)">
+      <div class="area-overlay"><div class="area-name">Santa Cruz</div><div class="area-tag">Primary Market</div><div class="area-num">Beachfront · Westside · Eastside</div></div>
+    </div>
+    <div class="area-card" style="background:linear-gradient(135deg,#2a1a0a,#5a3a1a)">
+      <div class="area-overlay"><div class="area-name">Carmel-by-the-Sea</div><div class="area-tag">Luxury Market</div><div class="area-num">Carmel Valley · Pebble Beach</div></div>
+    </div>
+    <div class="area-card" style="background:linear-gradient(135deg,#0a2a1a,#1a5a3a)">
+      <div class="area-overlay"><div class="area-name">Monterey</div><div class="area-tag">Bay Area Living</div><div class="area-num">Pacific Grove · Seaside</div></div>
+    </div>
+    <div class="area-card" style="background:linear-gradient(135deg,#1a0a2a,#3a1a5a)">
+      <div class="area-overlay"><div class="area-name">Capitola</div><div class="area-tag">Coastal Village</div><div class="area-num">Soquel · Aptos · Live Oak</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact fade-in" id="contact">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <span class="section-tag" style="background:rgba(201,168,76,.15);color:var(--gold-light)">Get In Touch</span>
+      <h2>Let's Talk About Your Move</h2>
+      <p>Whether you're buying, selling, or just exploring your options — Ryan is here to help. Reach out for a free, no-obligation consultation.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-icon"><svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+        (831) 555-0190
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon"><svg viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+        ryan@ryanbennetthomes.com
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+        Santa Cruz, CA — Serving the Monterey Bay Area
+      </div>
+      <div style="margin-top:32px;padding:20px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);border-radius:10px">
+        <p style="color:var(--gold-light);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Free Consultation</p>
+        <p style="color:rgba(255,255,255,.7);font-size:.875rem">Book a free 30-minute strategy call to discuss your real estate goals with no pressure and no obligation.</p>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h3>Book Your Free Consultation</h3>
+      <div class="form-row">
+        <div class="form-group"><input type="text" placeholder="First name" id="c-fname"></div>
+        <div class="form-group"><input type="text" placeholder="Last name" id="c-lname"></div>
+      </div>
+      <div class="form-group"><input type="email" placeholder="Email address" id="c-email"></div>
+      <div class="form-group"><input type="tel" placeholder="Phone number" id="c-phone"></div>
+      <div class="form-group">
+        <select id="c-type" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:12px 14px;font-size:.875rem;outline:none;font-family:inherit">
+          <option value="" disabled selected>I'm looking to...</option>
+          <option>Buy a home</option>
+          <option>Sell my home</option>
+          <option>Buy & Sell</option>
+          <option>Invest in real estate</option>
+          <option>Just exploring</option>
+        </select>
+      </div>
+      <div class="form-group"><textarea placeholder="Tell Ryan about your goals or questions..." id="c-message"></textarea></div>
+      <button class="btn-gold-sm" style="font-size:1rem;padding:15px" onclick="submitContact()">Send Message & Book Consultation →</button>
+      <div class="success-msg" id="contact-success">Thank you! Ryan will reach out within 24 hours to confirm your consultation.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo" style="font-size:1.1rem">Ryan Bennett <span>Real Estate Group</span></div>
+      <p>Helping You Move Forward with Confidence. Serving Santa Cruz, Carmel, Monterey & Capitola.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About Ryan</a></li>
+        <li><a href="#why">Why Choose Ryan</a></li>
+        <li><a href="#leads">Home Valuation</a></li>
+        <li><a href="#leads">Search Homes</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Service Areas</h4>
+      <ul>
+        <li><a href="#areas">Santa Cruz</a></li>
+        <li><a href="#areas">Carmel-by-the-Sea</a></li>
+        <li><a href="#areas">Monterey</a></li>
+        <li><a href="#areas">Capitola</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Ryan Bennett Real Estate Group. All rights reserved. DRE# 00000000</p>
+    <p class="footer-tagline">Local Expertise. Real Results.</p>
+  </div>
+</footer>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup">
+    <button class="popup-close" onclick="closePopup()">×</button>
+    <div class="popup-gift">🎁</div>
+    <h3>Free Buyer's Guide</h3>
+    <p>Get Ryan's exclusive first-time buyer guide — everything you need to know about buying in the Monterey Bay area.</p>
+    <input type="text" placeholder="Your name" id="popup-name">
+    <input type="email" placeholder="Email address" id="popup-email">
+    <button class="btn-gold" style="width:100%;padding:13px;border:none;cursor:pointer;font-size:.95rem" onclick="submitPopup()">Send Me the Free Guide →</button>
+  </div>
+</div>
+
+<script>
+function scrollTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+
+function submitLead(type){
+  if(type==='valuation'){
+    document.getElementById('val-success').style.display='block';
+  } else {
+    document.getElementById('buyer-success').style.display='block';
+  }
+}
+
+function submitContact(){
+  document.getElementById('contact-success').style.display='block';
+}
+
+function closePopup(){
+  document.getElementById('popup').classList.remove('active');
+}
+
+function submitPopup(){
+  closePopup();
+}
+
+// Scroll fade
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+// Show popup after 8s
+setTimeout(()=>{
+  document.getElementById('popup').classList.add('active');
+},8000);
+</script>
+</body>
+</html>
