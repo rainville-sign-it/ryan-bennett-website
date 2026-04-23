@@ -460,15 +460,26 @@
 function scrollTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
 
 function submitLead(type){
+  var v=function(id){var e=document.getElementById(id);return e?e.value:'';};
+  var subject, body;
   if(type==='valuation'){
+    subject='New Home Valuation Request - Ryan Bennett Website';
+    body='New home valuation request from the website:\n\nName: '+v('val-name')+'\nEmail: '+v('val-email')+'\nProperty Address: '+v('val-address')+'\n';
     document.getElementById('val-success').style.display='block';
   } else {
+    subject='New Buyer Inquiry - Ryan Bennett Website';
+    body='New buyer inquiry from the website:\n\nName: '+v('buyer-name')+'\nEmail: '+v('buyer-email')+'\nBudget: '+v('buyer-budget')+'\nAreas of Interest: '+v('buyer-area')+'\n';
     document.getElementById('buyer-success').style.display='block';
   }
+  window.location.href='mailto:rainville@larsonrealestate.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
 }
 
 function submitContact(){
+  var v=function(id){var e=document.getElementById(id);return e?e.value:'';};
+  var subject='New Contact Form Submission - Ryan Bennett Website';
+  var body='New contact from the website:\n\nFirst Name: '+v('c-fname')+'\nLast Name: '+v('c-lname')+'\nEmail: '+v('c-email')+'\nPhone: '+v('c-phone')+'\nI am a: '+v('c-type')+'\n\nMessage:\n'+v('c-message')+'\n';
   document.getElementById('contact-success').style.display='block';
+  window.location.href='mailto:rainville@larsonrealestate.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
 }
 
 function closePopup(){
@@ -476,6 +487,10 @@ function closePopup(){
 }
 
 function submitPopup(){
+  var v=function(id){var e=document.getElementById(id);return e?e.value:'';};
+  var subject='New Lead (Popup) - Ryan Bennett Website';
+  var body='New popup lead from the website:\n\nName: '+v('popup-name')+'\nEmail: '+v('popup-email')+'\n';
+  window.location.href='mailto:rainville@larsonrealestate.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
   closePopup();
 }
 
