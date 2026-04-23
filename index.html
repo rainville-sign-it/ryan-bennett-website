@@ -461,25 +461,63 @@ function scrollTo(id){document.getElementById(id).scrollIntoView({behavior:'smoo
 
 function submitLead(type){
   var v=function(id){var e=document.getElementById(id);return e?e.value:'';};
-  var subject, body;
+  var payload, successId;
   if(type==='valuation'){
-    subject='New Home Valuation Request - Ryan Bennett Website';
-    body='New home valuation request from the website:\n\nName: '+v('val-name')+'\nEmail: '+v('val-email')+'\nProperty Address: '+v('val-address')+'\n';
-    document.getElementById('val-success').style.display='block';
+    successId='val-success';
+    payload={
+      access_key:'a8bd26ed-f120-492e-86be-1930654526bf',
+      subject:'New Home Valuation Request - Ryan Bennett Website',
+      from_name:'Ryan Bennett Website',
+      form_type:'Home Valuation Request',
+      name:v('val-name'),
+      email:v('val-email'),
+      property_address:v('val-address')
+    };
   } else {
-    subject='New Buyer Inquiry - Ryan Bennett Website';
-    body='New buyer inquiry from the website:\n\nName: '+v('buyer-name')+'\nEmail: '+v('buyer-email')+'\nBudget: '+v('buyer-budget')+'\nAreas of Interest: '+v('buyer-area')+'\n';
-    document.getElementById('buyer-success').style.display='block';
+    successId='buyer-success';
+    payload={
+      access_key:'a8bd26ed-f120-492e-86be-1930654526bf',
+      subject:'New Buyer Inquiry - Ryan Bennett Website',
+      from_name:'Ryan Bennett Website',
+      form_type:'Buyer Inquiry',
+      name:v('buyer-name'),
+      email:v('buyer-email'),
+      budget:v('buyer-budget'),
+      areas_of_interest:v('buyer-area')
+    };
   }
-  window.location.href='mailto:rainville@larsonrealestate.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  fetch('https://api.web3forms.com/submit',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(function(r){return r.json();}).then(function(d){
+    if(d.success){document.getElementById(successId).style.display='block';}
+    else{alert('Sorry, there was a problem sending your request. Please try again or email us directly.');}
+  }).catch(function(){alert('Sorry, there was a network problem. Please try again.');});
 }
 
 function submitContact(){
   var v=function(id){var e=document.getElementById(id);return e?e.value:'';};
-  var subject='New Contact Form Submission - Ryan Bennett Website';
-  var body='New contact from the website:\n\nFirst Name: '+v('c-fname')+'\nLast Name: '+v('c-lname')+'\nEmail: '+v('c-email')+'\nPhone: '+v('c-phone')+'\nI am a: '+v('c-type')+'\n\nMessage:\n'+v('c-message')+'\n';
-  document.getElementById('contact-success').style.display='block';
-  window.location.href='mailto:rainville@larsonrealestate.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  var payload={
+    access_key:'a8bd26ed-f120-492e-86be-1930654526bf',
+    subject:'New Contact Form Submission - Ryan Bennett Website',
+    from_name:'Ryan Bennett Website',
+    form_type:'Contact Form',
+    first_name:v('c-fname'),
+    last_name:v('c-lname'),
+    email:v('c-email'),
+    phone:v('c-phone'),
+    i_am_a:v('c-type'),
+    message:v('c-message')
+  };
+  fetch('https://api.web3forms.com/submit',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(function(r){return r.json();}).then(function(d){
+    if(d.success){document.getElementById('contact-success').style.display='block';}
+    else{alert('Sorry, there was a problem sending your message. Please try again.');}
+  }).catch(function(){alert('Sorry, there was a network problem. Please try again.');});
 }
 
 function closePopup(){
@@ -488,9 +526,19 @@ function closePopup(){
 
 function submitPopup(){
   var v=function(id){var e=document.getElementById(id);return e?e.value:'';};
-  var subject='New Lead (Popup) - Ryan Bennett Website';
-  var body='New popup lead from the website:\n\nName: '+v('popup-name')+'\nEmail: '+v('popup-email')+'\n';
-  window.location.href='mailto:rainville@larsonrealestate.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  var payload={
+    access_key:'a8bd26ed-f120-492e-86be-1930654526bf',
+    subject:'New Lead (Popup) - Ryan Bennett Website',
+    from_name:'Ryan Bennett Website',
+    form_type:'Popup Lead',
+    name:v('popup-name'),
+    email:v('popup-email')
+  };
+  fetch('https://api.web3forms.com/submit',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(payload)
+  }).catch(function(){});
   closePopup();
 }
 
